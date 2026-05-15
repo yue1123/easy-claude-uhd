@@ -9,6 +9,7 @@ export const existsSync = (): boolean => false
 export const statSync = NOT_SUPPORTED
 export const mkdirSync = NOT_SUPPORTED
 export const readdirSync = (): string[] => []
+export const unlinkSync = NOT_SUPPORTED
 export default {
   readFileSync,
   writeFileSync,
@@ -16,4 +17,5 @@ export default {
   statSync,
   mkdirSync,
   readdirSync,
+  unlinkSync,
 }

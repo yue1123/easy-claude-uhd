@@ -4,8 +4,7 @@ import { Terminal } from '@xterm/xterm'
 import { FitAddon } from '@xterm/addon-fit'
 import '@xterm/xterm/css/xterm.css'
 import type { HudConfig } from '@/lib/hud-schema'
-import { MOCK_CONTEXT } from '@/lib/mock-context'
-import { renderAllAnsi } from '@/preview/render-ansi'
+import { renderToString } from '@/preview/upstream-bridge'
 
 const props = defineProps<{ config: HudConfig }>()
 
@@ -22,7 +21,7 @@ function getMonoFont(): string {
 function redraw() {
   if (!term) return
   term.reset()
-  term.write(renderAllAnsi(props.config, MOCK_CONTEXT))
+  term.write(renderToString(props.config))
 }
 
 onMounted(() => {
