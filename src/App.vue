@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import HudPreview from '@/preview/HudPreview.vue'
 import TabNav from '@/components/shell/TabNav.vue'
 import LayoutTab from '@/components/editor/LayoutTab.vue'
@@ -16,20 +17,25 @@ import ShareButton from '@/components/io/ShareButton.vue'
 import ValidationBanner from '@/components/shell/ValidationBanner.vue'
 import { useConfigStore } from '@/stores/config'
 
+const { t, locale } = useI18n()
 const store = useConfigStore()
 
-const tabs = [
-  { value: 'layout', label: 'Layout' },
-  { value: 'elements', label: 'Elements' },
-  { value: 'git', label: 'Git' },
-  { value: 'display', label: 'Display' },
-  { value: 'thresholds', label: 'Thresholds' },
-  { value: 'colors', label: 'Colors' },
-  { value: 'rawJson', label: 'Raw JSON' },
-]
+const tabs = computed(() => [
+  { value: 'layout', label: t('tabs.layout') },
+  { value: 'elements', label: t('tabs.elements') },
+  { value: 'git', label: t('tabs.git') },
+  { value: 'display', label: t('tabs.display') },
+  { value: 'thresholds', label: t('tabs.thresholds') },
+  { value: 'colors', label: t('tabs.colors') },
+  { value: 'rawJson', label: t('tabs.rawJson') },
+])
 
 const activeTab = ref('layout')
 const parsedConfig = computed(() => store.parsedConfig)
+
+function toggleLocale() {
+  locale.value = locale.value === 'en' ? 'zh' : 'en'
+}
 </script>
 
 <template>
@@ -41,7 +47,10 @@ const parsedConfig = computed(() => store.parsedConfig)
       <ExportButton />
       <ShareButton />
       <span class="topbar-spacer" />
-      <span class="topbar-hint">v0.3</span>
+      <button class="lang-toggle" type="button" @click="toggleLocale">
+        {{ locale.toUpperCase() }}
+      </button>
+      <span class="topbar-hint">v1.0</span>
     </header>
 
     <section class="preview-stage">
@@ -71,6 +80,20 @@ const parsedConfig = computed(() => store.parsedConfig)
 .topbar-hint {
   color: var(--fg-dim);
   font-size: 11px;
+  margin-left: var(--space-2);
+}
+.lang-toggle {
+  background: transparent;
+  border: 1px solid var(--border-dim);
+  color: var(--fg-dim);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  cursor: pointer;
+}
+.lang-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 .preview-stage {
   position: sticky;
