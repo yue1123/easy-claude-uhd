@@ -47,14 +47,14 @@ export function renderAll(cfg: HudConfig, ctx: MockContext): RenderLine[] {
   const out: RenderLine[] = []
 
   for (let i = 0; i < order.length; i++) {
-    const el = order[i]
+    const el = order[i] as HudElement
     if (seen.has(el)) continue
 
     const group = mergeLookup.get(el)
     if (group) {
       const sequence: HudElement[] = []
       for (let j = i; j < order.length; j++) {
-        const next = order[j]
+        const next = order[j] as HudElement
         if (!group.has(next) || seen.has(next)) break
         sequence.push(next)
       }
@@ -68,8 +68,8 @@ export function renderAll(cfg: HudConfig, ctx: MockContext): RenderLine[] {
         const combined: RenderLine = []
         rendered.forEach((r, idx) => {
           if (idx > 0) combined.push(SEPARATOR)
-          combined.push(...r.lines[0])
-          for (let k = 1; k < r.lines.length; k++) out.push(r.lines[k])
+          combined.push(...(r.lines[0] as RenderLine))
+          for (let k = 1; k < r.lines.length; k++) out.push(r.lines[k] as RenderLine)
         })
         out.push(combined)
         continue
