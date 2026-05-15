@@ -1,3 +1,4 @@
+// Browser stub for `node:child_process` — wired by vite.config.ts alias.
 const NOT_SUPPORTED = () => {
   throw new Error('Node child_process is not available in the browser bundle')
 }

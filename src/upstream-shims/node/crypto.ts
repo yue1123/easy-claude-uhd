@@ -1,3 +1,4 @@
+// Browser stub for `node:crypto` — wired by vite.config.ts alias.
 const NOT_SUPPORTED = () => {
   throw new Error('Node crypto API is not available in the browser bundle')
 }

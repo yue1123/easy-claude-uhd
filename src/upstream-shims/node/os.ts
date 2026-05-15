@@ -1,3 +1,4 @@
+// Browser stub for `node:os` — wired by vite.config.ts alias.
 export function homedir(): string {
   return '/'
 }
@@ -7,8 +8,9 @@ export function tmpdir(): string {
 export function platform(): string {
   return 'browser'
 }
+// Browser cannot report system memory; return safe sentinels.
 export function totalmem(): number {
-  return 0
+  return Number.MAX_SAFE_INTEGER
 }
 export function freemem(): number {
   return 0

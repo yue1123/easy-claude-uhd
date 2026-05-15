@@ -1,3 +1,4 @@
+// Browser stub for `node:path` — wired by vite.config.ts alias.
 function normalize(p: string): string {
   return p.replace(/\\/g, '/').replace(/\/+/g, '/')
 }
@@ -7,16 +8,33 @@ export function join(...parts: string[]): string {
   return normalize(parts.filter(Boolean).join('/'))
 }
 export function resolve(...parts: string[]): string {
-  let out = ''
+  let stack: string[] = []
+  let absolute = false
   for (const part of parts) {
     if (!part) continue
-    out = part.startsWith('/') ? part : out ? out + '/' + part : part
+    if (part.startsWith('/')) {
+      absolute = true
+      stack = []
+    }
+    for (const seg of part.split('/').filter(Boolean)) {
+      if (seg === '.') continue
+      if (seg === '..') {
+        if (stack.length > 0) stack.pop()
+        continue
+      }
+      stack.push(seg)
+    }
   }
-  return normalize(out || '/')
+  const joined = stack.join('/')
+  if (absolute) return '/' + joined
+  return joined || '.'
 }
 export function dirname(p: string): string {
-  const i = normalize(p).lastIndexOf('/')
-  return i <= 0 ? '/' : p.slice(0, i)
+  const n = normalize(p)
+  const i = n.lastIndexOf('/')
+  if (i < 0) return '.'
+  if (i === 0) return '/'
+  return n.slice(0, i)
 }
 export function basename(p: string, ext?: string): string {
   const n = normalize(p)

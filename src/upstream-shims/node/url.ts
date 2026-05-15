@@ -1,3 +1,5 @@
+// Browser stub for `node:url` — wired by vite.config.ts alias.
+// Alias the global URL so TS lets us re-export it without TS2661 shadow conflict.
 const URLCtor = URL
 export function pathToFileURL(p: string): URL {
   const path = p.startsWith('/') ? p : '/' + p
