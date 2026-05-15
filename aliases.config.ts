@@ -12,6 +12,8 @@ export const sharedAliases = [
   // upstream uses `.js` import extensions but the shim is `.ts`. Must come
   // before the broad `@upstream` string-prefix alias to take precedence.
   { find: /^@upstream\/stdin(\.js)?$/, replacement: u('./src/upstream-shims/stdin.ts') },
+  { find: /^@upstream\/speed-tracker(\.js)?$/, replacement: u('./src/upstream-shims/speed-tracker.ts') },
+  { find: /^@upstream\/memory(\.js)?$/, replacement: u('./src/upstream-shims/memory.ts') },
   { find: '@upstream', replacement: u('./vendor/claude-hud/src') },
   // Node built-ins → browser stubs (see src/upstream-shims/node/)
   { find: 'node:fs', replacement: u('./src/upstream-shims/node/fs.ts') },
