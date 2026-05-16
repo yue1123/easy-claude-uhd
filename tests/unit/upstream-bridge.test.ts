@@ -48,4 +48,13 @@ describe('renderToString', () => {
     // language produces a different string.
     expect(en).not.toBe(zh)
   })
+
+  // Regression net for silent upstream renderer drift.
+  // If upstream's render() output for DEFAULT_CONFIG changes, the snapshot
+  // diff will surface it in PR review. Update the snapshot intentionally
+  // (via `pnpm test:run -u` or `vitest -u`) when the change is desired,
+  // e.g. after a deliberate submodule bump.
+  it('renders DEFAULT_CONFIG identically to the captured snapshot', () => {
+    expect(renderToString(DEFAULT_CONFIG)).toMatchSnapshot()
+  })
 })
