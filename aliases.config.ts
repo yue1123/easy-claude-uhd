@@ -8,15 +8,13 @@ const u = (p: string) => fileURLToPath(new URL(p, import.meta.url))
 
 export const sharedAliases = [
   { find: '@', replacement: u('./src') },
-  // upstream stdin replacement (renderer-only subset). Regex form because
-  // upstream uses `.js` import extensions but the shim is `.ts`. Must come
-  // before the broad `@upstream` string-prefix alias to take precedence.
-  { find: /^@upstream\/stdin(\.js)?$/, replacement: u('./src/upstream-shims/stdin.ts') },
-  { find: /^@upstream\/speed-tracker(\.js)?$/, replacement: u('./src/upstream-shims/speed-tracker.ts') },
-  { find: /^@upstream\/memory(\.js)?$/, replacement: u('./src/upstream-shims/memory.ts') },
-  { find: /^@upstream\/utils\/terminal(\.js)?$/, replacement: u('./src/upstream-shims/terminal.ts') },
   { find: '@upstream', replacement: u('./vendor/claude-hud/src') },
-  // Node built-ins → browser stubs (see src/upstream-shims/node/)
+  // Node built-ins → browser stubs. These are what actually neutralize
+  // upstream's Node-only paths: process.env reads short-circuit to undefined,
+  // existsSync returns false, etc. Upstream code is bundled as-is and
+  // executes through these stubs at runtime — no need for per-module shims
+  // for stdin / speed-tracker / memory / terminal (we tried that route and
+  // discovered the regex aliases never matched upstream's relative imports).
   { find: 'node:fs', replacement: u('./src/upstream-shims/node/fs.ts') },
   { find: 'node:path', replacement: u('./src/upstream-shims/node/path.ts') },
   { find: 'node:os', replacement: u('./src/upstream-shims/node/os.ts') },
