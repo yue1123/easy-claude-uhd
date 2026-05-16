@@ -3,22 +3,22 @@ import type { JsonObject } from '@/lib/path-set'
 
 export interface Preset {
   id: string
-  label: string
-  description: string
+  labelKey: string
+  descriptionKey: string
   config: Partial<HudConfig> & JsonObject
 }
 
 export const PRESETS: Preset[] = [
   {
     id: 'default',
-    label: 'Default',
-    description: 'Upstream defaults — equivalent to an empty config.',
+    labelKey: 'presets.default.label',
+    descriptionKey: 'presets.default.description',
     config: {},
   },
   {
     id: 'minimal',
-    label: 'Minimal',
-    description: 'Just model badge + project + context. Everything else off.',
+    labelKey: 'presets.minimal.label',
+    descriptionKey: 'presets.minimal.description',
     config: {
       elementOrder: ['project', 'context'],
       display: {
@@ -29,8 +29,8 @@ export const PRESETS: Preset[] = [
   },
   {
     id: 'full-featured',
-    label: 'Full-featured',
-    description: 'Every information element visible.',
+    labelKey: 'presets.fullFeatured.label',
+    descriptionKey: 'presets.fullFeatured.description',
     config: {
       showSeparators: true,
       display: {
@@ -54,8 +54,8 @@ export const PRESETS: Preset[] = [
   },
   {
     id: 'cjk',
-    label: 'CJK optimized',
-    description: 'Chinese users — language=zh, compact layout, narrow bar chars.',
+    labelKey: 'presets.cjk.label',
+    descriptionKey: 'presets.cjk.description',
     config: {
       language: 'zh',
       pathLevels: 1,
@@ -68,8 +68,8 @@ export const PRESETS: Preset[] = [
   },
   {
     id: 'dev-mode',
-    label: 'Dev mode',
-    description: 'Cost, duration, speed, token breakdown, Claude Code version.',
+    labelKey: 'presets.devMode.label',
+    descriptionKey: 'presets.devMode.description',
     config: {
       display: {
         showCost: true,
@@ -83,8 +83,8 @@ export const PRESETS: Preset[] = [
   },
   {
     id: 'compact-oneliner',
-    label: 'Compact one-liner',
-    description: 'Single-line dense layout — merge everything visible.',
+    labelKey: 'presets.compactOneliner.label',
+    descriptionKey: 'presets.compactOneliner.description',
     config: {
       lineLayout: 'compact',
       display: {

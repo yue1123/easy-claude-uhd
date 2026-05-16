@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
 import FieldRow from '@/components/form/FieldRow.vue'
 import ColorPicker from '@/components/form/ColorPicker.vue'
 import TextInput from '@/components/form/TextInput.vue'
 import type { HudColorOverrides, HudColorValue } from '@/lib/hud-schema'
 
+const { t } = useI18n()
 const store = useConfigStore()
 const c = computed(() => store.parsedConfig.colors)
 
@@ -22,22 +24,18 @@ type ColorKey =
   | 'label'
   | 'custom'
 
-const colorFields: Array<{ key: ColorKey; label: string; hint?: string }> = [
-  { key: 'context', label: 'context', hint: 'Default color for context bar/value.' },
-  { key: 'usage', label: 'usage', hint: 'Default color for usage bars.' },
-  {
-    key: 'warning',
-    label: 'warning',
-    hint: 'Context warning color (>= contextWarningThreshold).',
-  },
-  { key: 'usageWarning', label: 'usageWarning', hint: 'Usage warning color.' },
-  { key: 'critical', label: 'critical', hint: 'Context critical color.' },
-  { key: 'model', label: 'model', hint: 'Color for the [Model] badge.' },
-  { key: 'project', label: 'project', hint: 'Color for the project path.' },
-  { key: 'git', label: 'git', hint: 'Color for git status text.' },
-  { key: 'gitBranch', label: 'gitBranch', hint: 'Color for the branch name.' },
-  { key: 'label', label: 'label', hint: 'Color for labels like "ctx", "5h".' },
-  { key: 'custom', label: 'custom', hint: 'Color for custom-line elements.' },
+const colorFields: Array<{ key: ColorKey }> = [
+  { key: 'context' },
+  { key: 'usage' },
+  { key: 'warning' },
+  { key: 'usageWarning' },
+  { key: 'critical' },
+  { key: 'model' },
+  { key: 'project' },
+  { key: 'git' },
+  { key: 'gitBranch' },
+  { key: 'label' },
+  { key: 'custom' },
 ]
 
 function setColor(key: string, v: HudColorValue) {
@@ -56,9 +54,9 @@ function colorOf(key: ColorKey): HudColorValue {
     <FieldRow
       v-for="f in colorFields"
       :key="f.key"
-      :label="f.label"
+      :label="t(`colors.fields.${f.key}.label`)"
       :path="`colors.${f.key}`"
-      :hint="f.hint"
+      :hint="t(`colors.fields.${f.key}.hint`)"
     >
       <ColorPicker
         :modelValue="colorOf(f.key)"
@@ -67,9 +65,9 @@ function colorOf(key: ColorKey): HudColorValue {
     </FieldRow>
 
     <FieldRow
-      label="barFilled"
+      :label="t('colors.fields.barFilled.label')"
       path="colors.barFilled"
-      hint="Single character (or grapheme) used for filled bar segments."
+      :hint="t('colors.fields.barFilled.hint')"
     >
       <TextInput
         :modelValue="c.barFilled"
@@ -79,9 +77,9 @@ function colorOf(key: ColorKey): HudColorValue {
       />
     </FieldRow>
     <FieldRow
-      label="barEmpty"
+      :label="t('colors.fields.barEmpty.label')"
       path="colors.barEmpty"
-      hint="Single character used for empty bar segments."
+      :hint="t('colors.fields.barEmpty.hint')"
     >
       <TextInput
         :modelValue="c.barEmpty"

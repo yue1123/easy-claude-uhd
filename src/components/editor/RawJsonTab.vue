@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
 import type { JsonObject } from '@/lib/path-set'
 
+const { t } = useI18n()
 const store = useConfigStore()
 
 const draft = ref(JSON.stringify(store.rawJson, null, 2))
@@ -25,7 +27,7 @@ function onBlur() {
   try {
     const parsed = JSON.parse(draft.value || '{}')
     if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
-      error.value = 'Config must be a JSON object'
+      error.value = t('rawJson.nonObjectError')
       return
     }
     error.value = null
@@ -38,10 +40,7 @@ function onBlur() {
 
 <template>
   <div class="raw-json-tab">
-    <p class="hint">
-      Edit the underlying JSON directly. Changes apply on blur. Unknown fields are preserved on
-      export.
-    </p>
+    <p class="hint">{{ t('rawJson.hint') }}</p>
     <textarea
       class="json-textarea"
       :class="{ 'has-error': error }"

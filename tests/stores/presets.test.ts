@@ -6,16 +6,20 @@ describe('presets', () => {
     expect(PRESETS).toHaveLength(6)
   })
 
-  it('each preset has id, label, config', () => {
+  it('each preset has id, labelKey, descriptionKey, config', () => {
     for (const p of PRESETS) {
       expect(p.id).toBeTruthy()
-      expect(p.label).toBeTruthy()
+      expect(p.labelKey).toBeTruthy()
+      expect(p.labelKey).toMatch(/^presets\./)
+      expect(p.descriptionKey).toBeTruthy()
+      expect(p.descriptionKey).toMatch(/^presets\./)
       expect(typeof p.config).toBe('object')
     }
   })
 
   it('Default preset is the empty config', () => {
     expect(PRESETS[0]!.id).toBe('default')
+    expect(PRESETS[0]!.labelKey).toBe('presets.default.label')
     expect(PRESETS[0]!.config).toEqual({})
   })
 

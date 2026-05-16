@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
+import type { Diagnostic } from '@/lib/diagnostics'
 
 const props = defineProps<{
   label: string
@@ -8,10 +10,33 @@ const props = defineProps<{
   path?: string
 }>()
 
+const { t } = useI18n()
 const store = useConfigStore()
 const diagnostics = computed(() =>
   props.path ? store.diagnosticsForPath(props.path) : [],
 )
+
+function formatDiagnostic(d: Diagnostic): string {
+  switch (d.kind) {
+    case 'clamped':
+      // All current CLAMPED_PATHS use max=100; can be extended via d.to vs d.from later.
+      return t('diagnostics.messages.clamped', { max: 100 })
+    case 'unknownElement': {
+      const items = Array.isArray(d.from) ? (d.from as unknown[]).join(', ') : String(d.from ?? '')
+      return t('diagnostics.messages.unknownElement', { items })
+    }
+    case 'unknownEnum':
+      return t('diagnostics.messages.unknownEnum')
+    case 'invalidColor':
+      return t('diagnostics.messages.invalidColor')
+    case 'unknownField':
+      return t('diagnostics.messages.unknownField')
+    case 'duplicateInGroup':
+      return t('diagnostics.messages.duplicateInGroup')
+    default:
+      return d.message
+  }
+}
 </script>
 
 <template>
@@ -26,8 +51,9 @@ const diagnostics = computed(() =>
     <div v-if="hint || $slots.hint || diagnostics.length > 0" class="field-hint">
       <slot name="hint">{{ hint }}</slot>
       <p v-for="d in diagnostics" :key="d.kind" class="diag" :class="`diag-${d.severity}`">
-        ⚠ {{ d.message
-        }}<span v-if="d.from !== undefined"> (was: {{ JSON.stringify(d.from) }})</span>
+        ⚠ {{ formatDiagnostic(d)
+        }}<span v-if="d.from !== undefined">
+          ({{ t('diagnostics.wasPrefix') }} {{ JSON.stringify(d.from) }})</span>
       </p>
     </div>
   </div>

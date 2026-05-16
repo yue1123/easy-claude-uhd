@@ -1,15 +1,21 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
 import { PRESETS, type Preset } from '@/stores/presets'
 import ConfirmDialog from '@/components/io/ConfirmDialog.vue'
 import type { JsonObject } from '@/lib/path-set'
 
+const { t } = useI18n()
 const store = useConfigStore()
 const open = ref(false)
 const pendingPreset = ref<Preset | null>(null)
 
 const hasContent = computed(() => Object.keys(store.rawJson).length > 0)
+
+const dialogTitle = computed(() =>
+  pendingPreset.value ? `${t('dialog.loadPreset')}: ${t(pendingPreset.value.labelKey)}` : '',
+)
 
 function selectPreset(p: Preset) {
   open.value = false
@@ -32,19 +38,21 @@ function cancel() {
 
 <template>
   <div class="preset-wrap">
-    <button class="topbar-btn" type="button" @click="open = !open">[ presets ▾ ]</button>
+    <button class="topbar-btn" type="button" @click="open = !open">
+      {{ t('presetMenu.buttonLabel') }}
+    </button>
     <ul v-if="open" class="menu" @mouseleave="open = false">
       <li v-for="p in PRESETS" :key="p.id" class="menu-item" @click="selectPreset(p)">
-        <div class="item-label">{{ p.label }}</div>
-        <div class="item-desc">{{ p.description }}</div>
+        <div class="item-label">{{ t(p.labelKey) }}</div>
+        <div class="item-desc">{{ t(p.descriptionKey) }}</div>
       </li>
     </ul>
 
     <ConfirmDialog
       :open="pendingPreset !== null"
-      :title="`Load preset: ${pendingPreset?.label ?? ''}`"
-      message="This will replace your current configuration. Unknown fields you have set will be lost."
-      confirm-label="Load preset"
+      :title="dialogTitle"
+      :message="t('dialog.replacePresetWarning')"
+      :confirm-label="t('dialog.loadPreset')"
       @confirm="pendingPreset && apply(pendingPreset)"
       @cancel="cancel"
     />

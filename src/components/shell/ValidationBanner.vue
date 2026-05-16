@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
 
+const { t } = useI18n()
 const store = useConfigStore()
 
 const grouped = computed(() => {
@@ -24,11 +26,11 @@ const isEmpty = computed(() => store.diagnostics.length === 0)
     <div class="banner-summary">
       <span class="icon">⚠</span>
       <span v-for="[kind, count] in grouped" :key="kind" class="kind-pill">
-        {{ count }} {{ kind }}
+        {{ count }} {{ t(`diagnostics.kinds.${kind}`) }}
       </span>
     </div>
     <div v-if="unknownFields.length > 0" class="unknown-list">
-      Unknown fields preserved on export:
+      {{ t('banner.unknownFields') }}
       <code v-for="p in unknownFields" :key="p" class="unknown-path">{{ p }}</code>
     </div>
   </div>

@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { DEFAULT_ELEMENT_ORDER, type HudElement } from '@/lib/hud-schema'
+
+const { t } = useI18n()
 
 const props = defineProps<{ modelValue: HudElement[][] }>()
 const emit = defineEmits<{ (e: 'update:modelValue', v: HudElement[][]): void }>()
@@ -68,11 +71,13 @@ function onAddSelect(gIdx: number, e: Event) {
         class="add-select"
         @change="onAddSelect(gIdx, $event)"
       >
-        <option value="" disabled selected>+ add</option>
+        <option value="" disabled selected>{{ t('mergeGroupEditor.addElement') }}</option>
         <option v-for="el in availableElements" :key="el" :value="el">{{ el }}</option>
       </select>
       <span class="group-spacer" />
-      <button type="button" class="remove-group" @click="removeGroup(gIdx)">delete group</button>
+      <button type="button" class="remove-group" @click="removeGroup(gIdx)">
+        {{ t('mergeGroupEditor.deleteGroup') }}
+      </button>
     </div>
     <button
       v-if="availableElements.length >= 2"
@@ -80,10 +85,10 @@ function onAddSelect(gIdx: number, e: Event) {
       class="add-group"
       @click="addGroup"
     >
-      + add group
+      {{ t('mergeGroupEditor.addGroup') }}
     </button>
     <p v-else-if="modelValue.length === 0" class="empty">
-      No merge groups. Click "+ add group" when elements are available.
+      {{ t('mergeGroupEditor.empty') }}
     </p>
   </div>
 </template>

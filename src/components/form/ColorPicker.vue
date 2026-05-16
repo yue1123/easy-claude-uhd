@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import type { HudColorValue, HudColorName } from '@/lib/hud-schema'
+
+const { t } = useI18n()
 
 const NAMED_COLORS: HudColorName[] = [
   'dim',
@@ -52,7 +55,7 @@ function setHex(e: Event) {
         :class="{ on: mode === 'named' }"
         @click="setMode('named')"
       >
-        named
+        {{ t('colorPicker.modeNamed') }}
       </button>
       <button
         data-mode="index"
@@ -60,7 +63,7 @@ function setHex(e: Event) {
         :class="{ on: mode === 'index' }"
         @click="setMode('index')"
       >
-        256
+        {{ t('colorPicker.modeIndex') }}
       </button>
       <button
         data-mode="hex"
@@ -68,7 +71,7 @@ function setHex(e: Event) {
         :class="{ on: mode === 'hex' }"
         @click="setMode('hex')"
       >
-        hex
+        {{ t('colorPicker.modeHex') }}
       </button>
     </div>
     <div class="mode-body">
@@ -85,11 +88,11 @@ function setHex(e: Event) {
       </div>
       <div v-else-if="mode === 'index'" class="index-row">
         <input type="number" min="0" max="255" :value="modelValue" @input="setIndex" />
-        <span class="hint">0–255</span>
+        <span class="hint">{{ t('colorPicker.indexHint') }}</span>
       </div>
       <div v-else class="hex-row">
         <input type="text" :value="modelValue" @input="setHex" />
-        <span class="hint">#rrggbb</span>
+        <span class="hint">{{ t('colorPicker.hexHint') }}</span>
       </div>
     </div>
   </div>

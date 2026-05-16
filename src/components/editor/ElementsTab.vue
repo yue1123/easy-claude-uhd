@@ -1,55 +1,67 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
 import FieldRow from '@/components/form/FieldRow.vue'
 import ToggleSwitch from '@/components/form/ToggleSwitch.vue'
 import MergeGroupEditor from '@/components/form/MergeGroupEditor.vue'
 import type { HudElement } from '@/lib/hud-schema'
 
+const { t } = useI18n()
 const store = useConfigStore()
 const cfg = computed(() => store.parsedConfig)
 
-const elementToggles: Array<{ path: string; label: string; hint?: string }> = [
-  { path: 'display.showModel', label: 'showModel', hint: 'Show the [Model name] badge.' },
-  { path: 'display.showProject', label: 'showProject', hint: 'Show the project path.' },
-  { path: 'display.showAddedDirs', label: 'showAddedDirs', hint: 'Show added directories.' },
-  { path: 'display.showContextBar', label: 'showContextBar', hint: 'Show the context-usage bar.' },
-  {
-    path: 'display.showTokenBreakdown',
-    label: 'showTokenBreakdown',
-    hint: 'Show in/out token counts after the percentage.',
-  },
-  { path: 'display.showUsage', label: 'showUsage', hint: 'Show the 5h / 7d usage line.' },
-  {
-    path: 'display.usageBarEnabled',
-    label: 'usageBarEnabled',
-    hint: 'Show bars for usage values.',
-  },
-  {
-    path: 'display.showResetLabel',
-    label: 'showResetLabel',
-    hint: 'Show reset countdown for usage.',
-  },
-  { path: 'display.showTools', label: 'showTools' },
-  { path: 'display.showAgents', label: 'showAgents' },
-  { path: 'display.showTodos', label: 'showTodos' },
-  { path: 'display.showMemoryUsage', label: 'showMemoryUsage' },
-  { path: 'display.showPromptCache', label: 'showPromptCache' },
-  { path: 'display.showSessionName', label: 'showSessionName' },
-  { path: 'display.showClaudeCodeVersion', label: 'showClaudeCodeVersion' },
-  { path: 'display.showEffortLevel', label: 'showEffortLevel' },
-  { path: 'display.showSessionTokens', label: 'showSessionTokens' },
-  { path: 'display.showOutputStyle', label: 'showOutputStyle' },
-  { path: 'display.showSessionStartDate', label: 'showSessionStartDate' },
-  { path: 'display.showLastResponseAt', label: 'showLastResponseAt' },
-  {
-    path: 'display.showConfigCounts',
-    label: 'showConfigCounts',
-    hint: 'Show counts of CLAUDE.md / rules / MCPs / hooks.',
-  },
-  { path: 'display.showCost', label: 'showCost' },
-  { path: 'display.showDuration', label: 'showDuration' },
-  { path: 'display.showSpeed', label: 'showSpeed' },
+type ToggleKey =
+  | 'showModel'
+  | 'showProject'
+  | 'showAddedDirs'
+  | 'showContextBar'
+  | 'showTokenBreakdown'
+  | 'showUsage'
+  | 'usageBarEnabled'
+  | 'showResetLabel'
+  | 'showTools'
+  | 'showAgents'
+  | 'showTodos'
+  | 'showMemoryUsage'
+  | 'showPromptCache'
+  | 'showSessionName'
+  | 'showClaudeCodeVersion'
+  | 'showEffortLevel'
+  | 'showSessionTokens'
+  | 'showOutputStyle'
+  | 'showSessionStartDate'
+  | 'showLastResponseAt'
+  | 'showConfigCounts'
+  | 'showCost'
+  | 'showDuration'
+  | 'showSpeed'
+
+const elementToggles: Array<{ path: string; key: ToggleKey }> = [
+  { path: 'display.showModel', key: 'showModel' },
+  { path: 'display.showProject', key: 'showProject' },
+  { path: 'display.showAddedDirs', key: 'showAddedDirs' },
+  { path: 'display.showContextBar', key: 'showContextBar' },
+  { path: 'display.showTokenBreakdown', key: 'showTokenBreakdown' },
+  { path: 'display.showUsage', key: 'showUsage' },
+  { path: 'display.usageBarEnabled', key: 'usageBarEnabled' },
+  { path: 'display.showResetLabel', key: 'showResetLabel' },
+  { path: 'display.showTools', key: 'showTools' },
+  { path: 'display.showAgents', key: 'showAgents' },
+  { path: 'display.showTodos', key: 'showTodos' },
+  { path: 'display.showMemoryUsage', key: 'showMemoryUsage' },
+  { path: 'display.showPromptCache', key: 'showPromptCache' },
+  { path: 'display.showSessionName', key: 'showSessionName' },
+  { path: 'display.showClaudeCodeVersion', key: 'showClaudeCodeVersion' },
+  { path: 'display.showEffortLevel', key: 'showEffortLevel' },
+  { path: 'display.showSessionTokens', key: 'showSessionTokens' },
+  { path: 'display.showOutputStyle', key: 'showOutputStyle' },
+  { path: 'display.showSessionStartDate', key: 'showSessionStartDate' },
+  { path: 'display.showLastResponseAt', key: 'showLastResponseAt' },
+  { path: 'display.showConfigCounts', key: 'showConfigCounts' },
+  { path: 'display.showCost', key: 'showCost' },
+  { path: 'display.showDuration', key: 'showDuration' },
+  { path: 'display.showSpeed', key: 'showSpeed' },
 ]
 
 function getBool(path: string): boolean {
@@ -73,25 +85,25 @@ function setMergeGroups(v: HudElement[][]) {
 
 <template>
   <div class="elements-tab">
-    <h3 class="section-title">Visibility toggles</h3>
+    <h3 class="section-title">{{ t('elements.sections.visibility') }}</h3>
     <FieldRow
-      v-for="t in elementToggles"
-      :key="t.path"
-      :label="t.label"
-      :path="t.path"
-      :hint="t.hint"
+      v-for="toggle in elementToggles"
+      :key="toggle.path"
+      :label="t(`elements.fields.${toggle.key}.label`)"
+      :path="toggle.path"
+      :hint="t(`elements.fields.${toggle.key}.hint`)"
     >
       <ToggleSwitch
-        :modelValue="getBool(t.path)"
-        @update:modelValue="setBool(t.path, $event)"
+        :modelValue="getBool(toggle.path)"
+        @update:modelValue="setBool(toggle.path, $event)"
       />
     </FieldRow>
 
-    <h3 class="section-title">Merge groups</h3>
+    <h3 class="section-title">{{ t('elements.sections.mergeGroups') }}</h3>
     <FieldRow
-      label="display.mergeGroups"
+      :label="t('elements.fields.mergeGroups.label')"
       path="display.mergeGroups"
-      hint="Elements in the same group render on one line separated by │."
+      :hint="t('elements.fields.mergeGroups.hint')"
     >
       <MergeGroupEditor
         :modelValue="cfg.display.mergeGroups"

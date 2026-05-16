@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const props = defineProps<{ modelValue: boolean }>()
 const emit = defineEmits<{ (e: 'update:modelValue', v: boolean): void }>()
 function toggle() {
@@ -9,7 +12,7 @@ function toggle() {
 <template>
   <button type="button" class="toggle" :class="{ on: modelValue }" @click="toggle">
     <span class="dot" />
-    <span class="state">{{ modelValue ? 'on' : 'off' }}</span>
+    <span class="state">{{ modelValue ? t('forms.toggleOn') : t('forms.toggleOff') }}</span>
   </button>
 </template>
 

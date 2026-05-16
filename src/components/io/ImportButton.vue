@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
 import type { JsonObject } from '@/lib/path-set'
 
+const { t } = useI18n()
 const store = useConfigStore()
 
 const open = ref(false)
@@ -24,7 +26,7 @@ async function onFile(e: Event) {
   const file = input.files?.[0]
   if (!file) return
   if (file.size > 1024 * 1024) {
-    error.value = 'File too large (>1 MB)'
+    error.value = t('import.fileTooLarge')
     return
   }
   draft.value = await file.text()
@@ -35,7 +37,7 @@ function onDrop(e: DragEvent) {
   const file = e.dataTransfer?.files?.[0]
   if (!file) return
   if (file.size > 1024 * 1024) {
-    error.value = 'File too large (>1 MB)'
+    error.value = t('import.fileTooLarge')
     return
   }
   file.text().then((text) => {
@@ -52,7 +54,7 @@ function apply() {
     return
   }
   if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
-    error.value = 'Config must be a JSON object'
+    error.value = t('import.nonObjectError')
     return
   }
   store.setRawJson(parsed as JsonObject)
@@ -62,20 +64,24 @@ function apply() {
 
 <template>
   <span class="import-wrap">
-    <button class="topbar-btn" type="button" @click="openModal">[ import ]</button>
+    <button class="topbar-btn" type="button" @click="openModal">
+      {{ t('import.buttonLabel') }}
+    </button>
 
     <div v-if="open" class="modal-backdrop" @click.self="closeModal">
       <div class="modal" @dragover.prevent @drop="onDrop">
-        <h3 class="title">Import config.json</h3>
-        <p class="hint">
-          Paste JSON below, drag a file in, or pick one. Existing config will be replaced.
-        </p>
+        <h3 class="title">{{ t('import.title') }}</h3>
+        <p class="hint">{{ t('import.hint') }}</p>
         <input type="file" accept="application/json,.json" @change="onFile" />
         <textarea v-model="draft" spellcheck="false" />
-        <p v-if="error" class="error">⚠ {{ error }}</p>
+        <p v-if="error" class="error">{{ t('import.errorPrefix') }} {{ error }}</p>
         <div class="actions">
-          <button class="btn-secondary" type="button" @click="closeModal">Cancel</button>
-          <button class="btn-primary" type="button" @click="apply">Apply</button>
+          <button class="btn-secondary" type="button" @click="closeModal">
+            {{ t('dialog.cancel') }}
+          </button>
+          <button class="btn-primary" type="button" @click="apply">
+            {{ t('import.apply') }}
+          </button>
         </div>
       </div>
     </div>

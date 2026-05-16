@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
 import FieldRow from '@/components/form/FieldRow.vue'
 import ToggleSwitch from '@/components/form/ToggleSwitch.vue'
@@ -7,6 +8,7 @@ import SelectInput from '@/components/form/SelectInput.vue'
 import NumberInput from '@/components/form/NumberInput.vue'
 import SortableList from '@/components/form/SortableList.vue'
 
+const { t } = useI18n()
 const store = useConfigStore()
 const cfg = computed(() => store.parsedConfig)
 
@@ -33,29 +35,29 @@ function setElementOrder(v: string[]) {
 
 <template>
   <div class="layout-tab">
-    <FieldRow label="Line layout" path="lineLayout">
+    <FieldRow :label="t('layout.fields.lineLayout.label')" path="lineLayout">
       <SelectInput
         :modelValue="cfg.lineLayout"
         :options="[
-          { value: 'expanded', label: 'expanded' },
-          { value: 'compact', label: 'compact' },
+          { value: 'expanded', label: t('layout.options.lineLayout.expanded') },
+          { value: 'compact', label: t('layout.options.lineLayout.compact') },
         ]"
         @update:modelValue="setLineLayout"
       />
     </FieldRow>
 
     <FieldRow
-      label="Show separators"
+      :label="t('layout.fields.showSeparators.label')"
       path="showSeparators"
-      hint="Insert a dashed separator line between header and activity lines."
+      :hint="t('layout.fields.showSeparators.hint')"
     >
       <ToggleSwitch :modelValue="cfg.showSeparators" @update:modelValue="setShowSeparators" />
     </FieldRow>
 
     <FieldRow
-      label="Path levels"
+      :label="t('layout.fields.pathLevels.label')"
       path="pathLevels"
-      hint="How many path segments to show in the project label."
+      :hint="t('layout.fields.pathLevels.hint')"
     >
       <SelectInput
         :modelValue="cfg.pathLevels"
@@ -69,31 +71,31 @@ function setElementOrder(v: string[]) {
     </FieldRow>
 
     <FieldRow
-      label="Max width"
+      :label="t('layout.fields.maxWidth.label')"
       path="maxWidth"
-      hint="Clamp output width (cells). Leave empty for auto."
+      :hint="t('layout.fields.maxWidth.hint')"
     >
       <NumberInput
         :modelValue="cfg.maxWidth"
         :min="0"
         nullable
-        placeholder="auto"
+        :placeholder="t('layout.placeholders.maxWidth')"
         @update:modelValue="setMaxWidth"
       />
     </FieldRow>
 
     <FieldRow
-      label="Force max width"
+      :label="t('layout.fields.forceMaxWidth.label')"
       path="forceMaxWidth"
-      hint="Use the configured maxWidth even when terminal width is wider."
+      :hint="t('layout.fields.forceMaxWidth.hint')"
     >
       <ToggleSwitch :modelValue="cfg.forceMaxWidth" @update:modelValue="setForceMaxWidth" />
     </FieldRow>
 
     <FieldRow
-      label="Element order"
+      :label="t('layout.fields.elementOrder.label')"
       path="elementOrder"
-      hint="Drag to reorder. Elements not listed are hidden."
+      :hint="t('layout.fields.elementOrder.hint')"
     >
       <SortableList :modelValue="cfg.elementOrder" @update:modelValue="setElementOrder" />
     </FieldRow>

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
 import FieldRow from '@/components/form/FieldRow.vue'
 import SelectInput from '@/components/form/SelectInput.vue'
 import NumberInput from '@/components/form/NumberInput.vue'
 import TextInput from '@/components/form/TextInput.vue'
 
+const { t } = useI18n()
 const store = useConfigStore()
 const d = computed(() => store.parsedConfig.display)
 
@@ -16,115 +18,135 @@ function set(path: string, v: unknown) {
 
 <template>
   <div class="display-tab">
-    <h3 class="section-title">Context display</h3>
+    <h3 class="section-title">{{ t('display.sections.contextDisplay') }}</h3>
     <FieldRow
-      label="contextValue"
+      :label="t('display.fields.contextValue.label')"
       path="display.contextValue"
-      hint="What to show as the context number."
+      :hint="t('display.fields.contextValue.hint')"
     >
       <SelectInput
         :modelValue="d.contextValue"
         :options="[
-          { value: 'percent', label: 'percent' },
-          { value: 'tokens', label: 'tokens' },
-          { value: 'remaining', label: 'remaining' },
-          { value: 'both', label: 'both' },
+          { value: 'percent', label: t('display.options.contextValue.percent') },
+          { value: 'tokens', label: t('display.options.contextValue.tokens') },
+          { value: 'remaining', label: t('display.options.contextValue.remaining') },
+          { value: 'both', label: t('display.options.contextValue.both') },
         ]"
         @update:modelValue="set('contextValue', $event)"
       />
     </FieldRow>
-    <FieldRow label="autocompactBuffer" path="display.autocompactBuffer">
+    <FieldRow
+      :label="t('display.fields.autocompactBuffer.label')"
+      path="display.autocompactBuffer"
+      :hint="t('display.fields.autocompactBuffer.hint')"
+    >
       <SelectInput
         :modelValue="d.autocompactBuffer"
         :options="[
-          { value: 'enabled', label: 'enabled' },
-          { value: 'disabled', label: 'disabled' },
+          { value: 'enabled', label: t('display.options.autocompactBuffer.enabled') },
+          { value: 'disabled', label: t('display.options.autocompactBuffer.disabled') },
         ]"
         @update:modelValue="set('autocompactBuffer', $event)"
       />
     </FieldRow>
 
-    <h3 class="section-title">Usage display</h3>
-    <FieldRow label="usageValue" path="display.usageValue">
+    <h3 class="section-title">{{ t('display.sections.usageDisplay') }}</h3>
+    <FieldRow
+      :label="t('display.fields.usageValue.label')"
+      path="display.usageValue"
+      :hint="t('display.fields.usageValue.hint')"
+    >
       <SelectInput
         :modelValue="d.usageValue"
         :options="[
-          { value: 'percent', label: 'percent' },
-          { value: 'remaining', label: 'remaining' },
+          { value: 'percent', label: t('display.options.usageValue.percent') },
+          { value: 'remaining', label: t('display.options.usageValue.remaining') },
         ]"
         @update:modelValue="set('usageValue', $event)"
       />
     </FieldRow>
     <FieldRow
-      label="usageCompact"
+      :label="t('display.fields.usageCompact.label')"
       path="display.usageCompact"
-      hint="Compress the usage line to fewer characters."
+      :hint="t('display.fields.usageCompact.hint')"
     >
       <SelectInput
         :modelValue="d.usageCompact ? 'on' : 'off'"
         :options="[
-          { value: 'off', label: 'off' },
-          { value: 'on', label: 'on' },
+          { value: 'off', label: t('forms.toggleOff') },
+          { value: 'on', label: t('forms.toggleOn') },
         ]"
         @update:modelValue="set('usageCompact', $event === 'on')"
       />
     </FieldRow>
 
-    <h3 class="section-title">Model</h3>
-    <FieldRow label="modelFormat" path="display.modelFormat">
+    <h3 class="section-title">{{ t('display.sections.model') }}</h3>
+    <FieldRow
+      :label="t('display.fields.modelFormat.label')"
+      path="display.modelFormat"
+      :hint="t('display.fields.modelFormat.hint')"
+    >
       <SelectInput
         :modelValue="d.modelFormat"
         :options="[
-          { value: 'full', label: 'full' },
-          { value: 'compact', label: 'compact' },
-          { value: 'short', label: 'short' },
+          { value: 'full', label: t('display.options.modelFormat.full') },
+          { value: 'compact', label: t('display.options.modelFormat.compact') },
+          { value: 'short', label: t('display.options.modelFormat.short') },
         ]"
         @update:modelValue="set('modelFormat', $event)"
       />
     </FieldRow>
     <FieldRow
-      label="modelOverride"
+      :label="t('display.fields.modelOverride.label')"
       path="display.modelOverride"
-      hint="If set, this string replaces the model display name entirely. Max 80 chars."
+      :hint="t('display.fields.modelOverride.hint')"
     >
       <TextInput
         :modelValue="d.modelOverride"
         :maxLength="80"
-        placeholder="e.g. Claude"
+        :placeholder="t('display.placeholders.modelOverride')"
         @update:modelValue="set('modelOverride', $event)"
       />
     </FieldRow>
 
-    <h3 class="section-title">Time</h3>
-    <FieldRow label="timeFormat" path="display.timeFormat">
+    <h3 class="section-title">{{ t('display.sections.time') }}</h3>
+    <FieldRow
+      :label="t('display.fields.timeFormat.label')"
+      path="display.timeFormat"
+      :hint="t('display.fields.timeFormat.hint')"
+    >
       <SelectInput
         :modelValue="d.timeFormat"
         :options="[
-          { value: 'relative', label: 'relative' },
-          { value: 'absolute', label: 'absolute' },
-          { value: 'both', label: 'both' },
+          { value: 'relative', label: t('display.options.timeFormat.relative') },
+          { value: 'absolute', label: t('display.options.timeFormat.absolute') },
+          { value: 'both', label: t('display.options.timeFormat.both') },
         ]"
         @update:modelValue="set('timeFormat', $event)"
       />
     </FieldRow>
 
-    <h3 class="section-title">Project</h3>
-    <FieldRow label="addedDirsLayout" path="display.addedDirsLayout">
+    <h3 class="section-title">{{ t('display.sections.project') }}</h3>
+    <FieldRow
+      :label="t('display.fields.addedDirsLayout.label')"
+      path="display.addedDirsLayout"
+      :hint="t('display.fields.addedDirsLayout.hint')"
+    >
       <SelectInput
         :modelValue="d.addedDirsLayout"
         :options="[
-          { value: 'inline', label: 'inline' },
-          { value: 'line', label: 'line' },
+          { value: 'inline', label: t('display.options.addedDirsLayout.inline') },
+          { value: 'line', label: t('display.options.addedDirsLayout.line') },
         ]"
         @update:modelValue="set('addedDirsLayout', $event)"
       />
     </FieldRow>
 
-    <h3 class="section-title">Prompt cache</h3>
+    <h3 class="section-title">{{ t('display.sections.promptCache') }}</h3>
     <FieldRow
-      label="promptCacheTtlSeconds"
+      :label="t('display.fields.promptCacheTtlSeconds.label')"
       path="display.promptCacheTtlSeconds"
-      hint="Anthropic API cache TTL (default 300)."
+      :hint="t('display.fields.promptCacheTtlSeconds.hint')"
     >
       <NumberInput
         :modelValue="d.promptCacheTtlSeconds"
@@ -133,22 +155,22 @@ function set(path: string, v: unknown) {
       />
     </FieldRow>
 
-    <h3 class="section-title">External usage</h3>
+    <h3 class="section-title">{{ t('display.sections.externalUsage') }}</h3>
     <FieldRow
-      label="externalUsagePath"
+      :label="t('display.fields.externalUsagePath.label')"
       path="display.externalUsagePath"
-      hint="Path to an external JSON snapshot of usage data."
+      :hint="t('display.fields.externalUsagePath.hint')"
     >
       <TextInput
         :modelValue="d.externalUsagePath"
-        placeholder="/path/to/usage.json"
+        :placeholder="t('display.placeholders.externalUsagePath')"
         @update:modelValue="set('externalUsagePath', $event)"
       />
     </FieldRow>
     <FieldRow
-      label="externalUsageFreshnessMs"
+      :label="t('display.fields.externalUsageFreshnessMs.label')"
       path="display.externalUsageFreshnessMs"
-      hint="Max age of the external snapshot before it's considered stale."
+      :hint="t('display.fields.externalUsageFreshnessMs.hint')"
     >
       <NumberInput
         :modelValue="d.externalUsageFreshnessMs"
@@ -157,11 +179,11 @@ function set(path: string, v: unknown) {
       />
     </FieldRow>
 
-    <h3 class="section-title">Custom</h3>
+    <h3 class="section-title">{{ t('display.sections.custom') }}</h3>
     <FieldRow
-      label="customLine"
+      :label="t('display.fields.customLine.label')"
       path="display.customLine"
-      hint="Free-form extra line appended at the end. Max 80 chars."
+      :hint="t('display.fields.customLine.hint')"
     >
       <TextInput
         :modelValue="d.customLine"

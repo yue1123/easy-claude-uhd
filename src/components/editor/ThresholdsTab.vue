@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
 import FieldRow from '@/components/form/FieldRow.vue'
 import ThresholdSlider from '@/components/form/ThresholdSlider.vue'
 
+const { t } = useI18n()
 const store = useConfigStore()
 const d = computed(() => store.parsedConfig.display)
 
@@ -15,9 +17,9 @@ function set(path: string, v: number) {
 <template>
   <div class="thresholds-tab">
     <FieldRow
-      label="contextWarningThreshold"
+      :label="t('thresholds.fields.contextWarningThreshold.label')"
       path="display.contextWarningThreshold"
-      hint="Context % at which the bar turns warning-colored."
+      :hint="t('thresholds.fields.contextWarningThreshold.hint')"
     >
       <ThresholdSlider
         :modelValue="d.contextWarningThreshold"
@@ -25,9 +27,9 @@ function set(path: string, v: number) {
       />
     </FieldRow>
     <FieldRow
-      label="contextCriticalThreshold"
+      :label="t('thresholds.fields.contextCriticalThreshold.label')"
       path="display.contextCriticalThreshold"
-      hint="Context % at which the bar turns critical-colored."
+      :hint="t('thresholds.fields.contextCriticalThreshold.hint')"
     >
       <ThresholdSlider
         :modelValue="d.contextCriticalThreshold"
@@ -35,9 +37,9 @@ function set(path: string, v: number) {
       />
     </FieldRow>
     <FieldRow
-      label="usageThreshold"
+      :label="t('thresholds.fields.usageThreshold.label')"
       path="display.usageThreshold"
-      hint="5h usage % above which the value turns warning-colored. 0 = off."
+      :hint="t('thresholds.fields.usageThreshold.hint')"
     >
       <ThresholdSlider
         :modelValue="d.usageThreshold"
@@ -45,9 +47,9 @@ function set(path: string, v: number) {
       />
     </FieldRow>
     <FieldRow
-      label="sevenDayThreshold"
+      :label="t('thresholds.fields.sevenDayThreshold.label')"
       path="display.sevenDayThreshold"
-      hint="7d usage % threshold."
+      :hint="t('thresholds.fields.sevenDayThreshold.hint')"
     >
       <ThresholdSlider
         :modelValue="d.sevenDayThreshold"
@@ -55,9 +57,9 @@ function set(path: string, v: number) {
       />
     </FieldRow>
     <FieldRow
-      label="environmentThreshold"
+      :label="t('thresholds.fields.environmentThreshold.label')"
       path="display.environmentThreshold"
-      hint="Threshold for environment counts (CLAUDE.md etc)."
+      :hint="t('thresholds.fields.environmentThreshold.hint')"
     >
       <ThresholdSlider
         :modelValue="d.environmentThreshold"

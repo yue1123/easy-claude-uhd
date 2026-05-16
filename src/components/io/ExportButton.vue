@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
 
+const { t } = useI18n()
 const store = useConfigStore()
 const toast = ref<string | null>(null)
 let toastTimer: number | null = null
@@ -26,16 +28,16 @@ function download() {
   a.click()
   document.body.removeChild(a)
   URL.revokeObjectURL(url)
-  showToast('Downloaded')
+  showToast(t('toast.downloaded'))
 }
 
 async function copyToClipboard() {
   const text = JSON.stringify(store.rawJson, null, 2)
   try {
     await navigator.clipboard.writeText(text)
-    showToast('Copied to clipboard')
+    showToast(t('toast.jsonCopied'))
   } catch {
-    showToast('Copy failed — see console')
+    showToast(t('toast.copyFailed'))
     console.error('Clipboard write failed; JSON is:', text)
   }
 }
@@ -43,14 +45,16 @@ async function copyToClipboard() {
 
 <template>
   <div class="export-wrap">
-    <button class="topbar-btn" type="button" @click="download">[ export ]</button>
+    <button class="topbar-btn" type="button" @click="download">
+      {{ t('export.downloadLabel') }}
+    </button>
     <button
       class="topbar-btn"
       type="button"
-      title="Copy JSON to clipboard"
+      :title="t('export.copyTooltip')"
       @click="copyToClipboard"
     >
-      [ copy ]
+      {{ t('export.copyLabel') }}
     </button>
     <span v-if="toast" class="toast">{{ toast }}</span>
   </div>

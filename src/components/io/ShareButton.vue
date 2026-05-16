@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
 import { encodeConfig } from '@/lib/url-codec'
 
+const { t } = useI18n()
 const store = useConfigStore()
 const toast = ref<string | null>(null)
 let toastTimer: number | null = null
@@ -18,12 +20,13 @@ function showToast(msg: string) {
 async function share() {
   const hash = encodeConfig(store.rawJson)
   const url = `${window.location.origin}${window.location.pathname}#${hash}`
-  const sizeHint = hash.length > 6000 ? ` (long: ${hash.length} chars)` : ''
+  const sizeHint =
+    hash.length > 6000 ? ' ' + t('share.longSuffix', { chars: hash.length }) : ''
   try {
     await navigator.clipboard.writeText(url)
-    showToast('Link copied' + sizeHint)
+    showToast(t('toast.linkCopied') + sizeHint)
   } catch {
-    showToast('Copy failed — see console')
+    showToast(t('toast.copyFailed'))
     console.error('Clipboard write failed; URL is:', url)
   }
 }
@@ -31,7 +34,9 @@ async function share() {
 
 <template>
   <div class="share-wrap">
-    <button class="topbar-btn" type="button" @click="share">[ share ]</button>
+    <button class="topbar-btn" type="button" @click="share">
+      {{ t('share.buttonLabel') }}
+    </button>
     <span v-if="toast" class="toast">{{ toast }}</span>
   </div>
 </template>
