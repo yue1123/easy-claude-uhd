@@ -10,6 +10,10 @@ export const statSync = NOT_SUPPORTED;
 export const mkdirSync = NOT_SUPPORTED;
 export const readdirSync = (): string[] => [];
 export const unlinkSync = NOT_SUPPORTED;
+// Best-effort in upstream (wrapped in try/catch); a no-op is the correct browser stub.
+export const chmodSync = (): void => {};
+// Only reached after statSync (which throws here); return the path unchanged as an identity resolve.
+export const realpathSync = (p: string): string => p;
 export default {
   readFileSync,
   writeFileSync,
@@ -18,4 +22,6 @@ export default {
   mkdirSync,
   readdirSync,
   unlinkSync,
+  chmodSync,
+  realpathSync,
 };
