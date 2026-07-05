@@ -1,97 +1,97 @@
 export interface MockTodo {
-  content: string
-  status: 'pending' | 'in_progress' | 'completed'
+  content: string;
+  status: "pending" | "in_progress" | "completed";
 }
 
 export interface MockToolRecent {
-  name: string
-  target?: string
+  name: string;
+  target?: string;
 }
 
 export interface MockAgent {
-  type: string
-  status: 'running' | 'completed'
+  type: string;
+  status: "running" | "completed";
 }
 
 export interface MockContext {
   model: {
-    displayName: string
-    id: string
-  }
+    displayName: string;
+    id: string;
+  };
   project: {
-    cwd: string
-    addedDirs: string[]
-    sessionName: string
-  }
+    cwd: string;
+    addedDirs: string[];
+    sessionName: string;
+  };
   context: {
-    usedPercentage: number
-    inputTokens: number
-    outputTokens: number
-    cacheCreationTokens: number
-    cacheReadTokens: number
-    contextWindow: number
-  }
+    usedPercentage: number;
+    inputTokens: number;
+    outputTokens: number;
+    cacheCreationTokens: number;
+    cacheReadTokens: number;
+    contextWindow: number;
+  };
   usage: {
-    fiveHour: number
-    sevenDay: number
-    fiveHourResetAtMinutes: number
-    sevenDayResetAtMinutes: number
-  }
+    fiveHour: number;
+    sevenDay: number;
+    fiveHourResetAtMinutes: number;
+    sevenDayResetAtMinutes: number;
+  };
   cost: {
-    totalUsd: number
-    durationMs: number
-    linesAdded: number
-    linesRemoved: number
-  }
+    totalUsd: number;
+    durationMs: number;
+    linesAdded: number;
+    linesRemoved: number;
+  };
   git: {
-    branch: string
-    dirty: boolean
-    ahead: number
-    behind: number
-    untrackedFiles: number
-    modifiedFiles: number
-    pushPendingCount: number
-  }
-  todos: MockTodo[]
-  tools: MockToolRecent[]
-  agents: MockAgent[]
+    branch: string;
+    dirty: boolean;
+    ahead: number;
+    behind: number;
+    untrackedFiles: number;
+    modifiedFiles: number;
+    pushPendingCount: number;
+  };
+  todos: MockTodo[];
+  tools: MockToolRecent[];
+  agents: MockAgent[];
   memory: {
-    usedPercent: number
-    usedGb: number
-    totalGb: number
-  }
+    usedPercent: number;
+    usedGb: number;
+    totalGb: number;
+  };
   environment: {
-    claudeMdCount: number
-    rulesCount: number
-    mcpCount: number
-    hooksCount: number
-  }
+    claudeMdCount: number;
+    rulesCount: number;
+    mcpCount: number;
+    hooksCount: number;
+  };
   session: {
-    durationLabel: string
-    lastResponseAgoLabel: string
-    startedAtLabel: string
-  }
+    durationLabel: string;
+    lastResponseAgoLabel: string;
+    startedAtLabel: string;
+  };
   effort: {
-    level: 'low' | 'medium' | 'high' | 'max'
-    symbol: string
-  }
-  outputStyle: string
-  claudeCodeVersion: string
+    level: "low" | "medium" | "high" | "max";
+    symbol: string;
+  };
+  outputStyle: string;
+  claudeCodeVersion: string;
   promptCache: {
-    activeUntilMs: number
-    ttlSeconds: number
-  }
+    activeUntilMs: number;
+    ttlSeconds: number;
+  };
 }
 
 export const MOCK_CONTEXT: MockContext = {
   model: {
-    displayName: 'Opus 4.7',
-    id: 'claude-opus-4-7',
+    displayName: "Opus 4.7",
+    id: "claude-opus-4-7",
   },
   project: {
-    cwd: '/Users/dh/Desktop/code/claude-uhd-cc',
+    cwd: "/Users/dh/Desktop/code/claude-uhd-cc",
     addedDirs: [],
-    sessionName: 'plan-foundation',
+    sessionName: "plan-foundation",
   },
   context: {
     usedPercentage: 58,
@@ -114,7 +114,7 @@ export const MOCK_CONTEXT: MockContext = {
     linesRemoved: 88,
   },
   git: {
-    branch: 'main',
+    branch: "main",
     dirty: false,
     ahead: 3,
     behind: 0,
@@ -123,20 +123,18 @@ export const MOCK_CONTEXT: MockContext = {
     pushPendingCount: 3,
   },
   todos: [
-    { content: 'Write the spec',         status: 'completed' },
-    { content: 'Build preview engine',   status: 'completed' },
-    { content: 'Implement editor tabs',  status: 'in_progress' },
-    { content: 'Hook up URL sharing',    status: 'pending' },
-    { content: 'Deploy to GitHub Pages', status: 'pending' },
+    { content: "Write the spec", status: "completed" },
+    { content: "Build preview engine", status: "completed" },
+    { content: "Implement editor tabs", status: "in_progress" },
+    { content: "Hook up URL sharing", status: "pending" },
+    { content: "Deploy to GitHub Pages", status: "pending" },
   ],
   tools: [
-    { name: 'Read', target: 'src/App.vue' },
-    { name: 'Edit', target: 'src/style.css' },
-    { name: 'Bash' },
+    { name: "Read", target: "src/App.vue" },
+    { name: "Edit", target: "src/style.css" },
+    { name: "Bash" },
   ],
-  agents: [
-    { type: 'explore', status: 'running' },
-  ],
+  agents: [{ type: "explore", status: "running" }],
   memory: {
     usedPercent: 31,
     usedGb: 9.9,
@@ -149,18 +147,18 @@ export const MOCK_CONTEXT: MockContext = {
     hooksCount: 1,
   },
   session: {
-    durationLabel: '14m 33s',
-    lastResponseAgoLabel: '12s',
-    startedAtLabel: '14:46',
+    durationLabel: "14m 33s",
+    lastResponseAgoLabel: "12s",
+    startedAtLabel: "14:46",
   },
   effort: {
-    level: 'high',
-    symbol: '◆',
+    level: "high",
+    symbol: "◆",
   },
-  outputStyle: 'default',
-  claudeCodeVersion: '2.1.119',
+  outputStyle: "default",
+  claudeCodeVersion: "2.1.119",
   promptCache: {
     activeUntilMs: 240_000,
     ttlSeconds: 300,
   },
-}
+};

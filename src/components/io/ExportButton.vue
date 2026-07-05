@@ -1,44 +1,44 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useConfigStore } from '@/stores/config'
+import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { useConfigStore } from "@/stores/config";
 
-const { t } = useI18n()
-const store = useConfigStore()
-const toast = ref<string | null>(null)
-let toastTimer: number | null = null
+const { t } = useI18n();
+const store = useConfigStore();
+const toast = ref<string | null>(null);
+let toastTimer: number | null = null;
 
 function showToast(msg: string) {
-  toast.value = msg
-  if (toastTimer !== null) window.clearTimeout(toastTimer)
+  toast.value = msg;
+  if (toastTimer !== null) window.clearTimeout(toastTimer);
   toastTimer = window.setTimeout(() => {
-    toast.value = null
-  }, 2000)
+    toast.value = null;
+  }, 2000);
 }
 
 function download() {
   const blob = new Blob([JSON.stringify(store.rawJson, null, 2)], {
-    type: 'application/json',
-  })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = 'config.json'
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  URL.revokeObjectURL(url)
-  showToast(t('toast.downloaded'))
+    type: "application/json",
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "config.json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast(t("toast.downloaded"));
 }
 
 async function copyToClipboard() {
-  const text = JSON.stringify(store.rawJson, null, 2)
+  const text = JSON.stringify(store.rawJson, null, 2);
   try {
-    await navigator.clipboard.writeText(text)
-    showToast(t('toast.jsonCopied'))
+    await navigator.clipboard.writeText(text);
+    showToast(t("toast.jsonCopied"));
   } catch {
-    showToast(t('toast.copyFailed'))
-    console.error('Clipboard write failed; JSON is:', text)
+    showToast(t("toast.copyFailed"));
+    console.error("Clipboard write failed; JSON is:", text);
   }
 }
 </script>
@@ -46,7 +46,7 @@ async function copyToClipboard() {
 <template>
   <div class="export-wrap">
     <button class="topbar-btn" type="button" @click="download">
-      {{ t('export.downloadLabel') }}
+      {{ t("export.downloadLabel") }}
     </button>
     <button
       class="topbar-btn"
@@ -54,7 +54,7 @@ async function copyToClipboard() {
       :title="t('export.copyTooltip')"
       @click="copyToClipboard"
     >
-      {{ t('export.copyLabel') }}
+      {{ t("export.copyLabel") }}
     </button>
     <span v-if="toast" class="toast">{{ toast }}</span>
   </div>
@@ -89,5 +89,6 @@ async function copyToClipboard() {
   font-size: 11px;
   padding: 2px 8px;
   white-space: nowrap;
+  z-index: 99;
 }
 </style>
