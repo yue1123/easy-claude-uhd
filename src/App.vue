@@ -53,13 +53,15 @@ function toggleLocale() {
       <span class="topbar-hint">v1.0</span>
     </header>
 
-    <section class="preview-stage">
-      <div class="stage-label">PREVIEW (live)</div>
-      <HudPreviewXterm :config="parsedConfig" />
-    </section>
+    <div class="sticky-head">
+      <section class="preview-stage">
+        <div class="stage-label">PREVIEW (live)</div>
+        <HudPreviewXterm :config="parsedConfig" />
+      </section>
 
-    <ValidationBanner />
-    <TabNav v-model="activeTab" :tabs="tabs" />
+      <ValidationBanner />
+      <TabNav v-model="activeTab" :tabs="tabs" />
+    </div>
 
     <main class="editor-stage">
       <LayoutTab v-if="activeTab === 'layout'" />
@@ -95,13 +97,16 @@ function toggleLocale() {
   color: var(--accent);
   border-color: var(--accent);
 }
-.preview-stage {
+.sticky-head {
   position: sticky;
   top: 0;
+  z-index: 10;
+  background: var(--bg-base);
+}
+.preview-stage {
   background: var(--bg-base);
   padding: var(--space-3) var(--space-4) var(--space-4);
   border-bottom: 1px dashed var(--border-dash);
-  z-index: 10;
 }
 .stage-label {
   color: var(--fg-dim);

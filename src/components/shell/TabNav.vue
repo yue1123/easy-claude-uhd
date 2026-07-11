@@ -23,8 +23,6 @@ defineEmits<{ (e: "update:modelValue", v: string): void }>();
 
 <style scoped>
 .tab-nav {
-  position: sticky;
-  top: 0;
   display: flex;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4) 0;
