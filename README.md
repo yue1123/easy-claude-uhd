@@ -2,12 +2,9 @@
 
 **English** · [简体中文](./README.zh-CN.md)
 
-
 A visual configuration tool for [**claude-hud**](https://github.com/jarrodwatts/claude-hud) — the statusline plugin for Claude Code.
 
 Instead of hand-editing `~/.claude/plugins/claude-hud/config.json`, you tweak switches, sliders, colors, and element order in a form and watch the resulting statusline re-render **live**, sized to look like the real terminal output. When you're done, export the `config.json` or share a link.
-
-It's a **pure static frontend** — no backend, no account, no cloud sync. Everything runs in the browser, so it's cheap to host and easy to share.
 
 ## What it does
 

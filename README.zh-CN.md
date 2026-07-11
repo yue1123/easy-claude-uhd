@@ -2,12 +2,9 @@
 
 [English](./README.md) · **简体中文**
 
-
 一个为 [**claude-hud**](https://github.com/jarrodwatts/claude-hud)(Claude Code 的状态栏插件)打造的可视化配置工具。
 
 不用再手动编辑 `~/.claude/plugins/claude-hud/config.json`,你可以在表单里拨动开关、拉动滑块、调整颜色和元素顺序,同时**实时**看到状态栏按真实终端输出的尺寸重新渲染。调好之后,直接导出 `config.json` 或分享一个链接即可。
-
-它是一个**纯静态前端**——没有后端、没有账号、没有云同步。一切都在浏览器里运行,因此托管成本极低、分享也很方便。
 
 ## 它能做什么
 
