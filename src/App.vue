@@ -16,6 +16,7 @@ import ExportButton from "@/components/io/ExportButton.vue";
 import ShareButton from "@/components/io/ShareButton.vue";
 import ValidationBanner from "@/components/shell/ValidationBanner.vue";
 import { useConfigStore } from "@/stores/config";
+import { setLocale } from "@/i18n";
 
 const { t, locale } = useI18n();
 const store = useConfigStore();
@@ -34,7 +35,7 @@ const activeTab = ref("layout");
 const parsedConfig = computed(() => store.parsedConfig);
 
 function toggleLocale() {
-  locale.value = locale.value === "en" ? "zh" : "en";
+  setLocale(locale.value === "en" ? "zh" : "en");
 }
 </script>
 
