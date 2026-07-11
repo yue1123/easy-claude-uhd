@@ -332,23 +332,31 @@ export const en = {
     },
     minimal: {
       label: 'Minimal',
-      description: 'Just model badge + project + context. Everything else off.',
+      description: 'Just model badge + project + context, one compact line.',
     },
-    fullFeatured: {
-      label: 'Full-featured',
-      description: 'Every information element visible.',
+    developer: {
+      label: 'Developer',
+      description: 'Git-centric — branch, dirty state, ahead/behind, file stats, deeper path.',
+    },
+    costUsage: {
+      label: 'Cost & Usage',
+      description: 'Track spend — cost, context bar, 5h + 7d limit bars with reset times.',
+    },
+    powerUser: {
+      label: 'Power user',
+      description: 'Everything on, expanded multi-line — tokens, cache, speed, counts, memory.',
     },
     cjk: {
       label: 'CJK optimized',
       description: 'Chinese users — language=zh, compact layout, narrow bar chars.',
     },
-    devMode: {
-      label: 'Dev mode',
-      description: 'Cost, duration, speed, token breakdown, Claude Code version.',
+    aesthetic: {
+      label: 'Aesthetic',
+      description: 'Themed compact one-liner — merged groups, custom colors and bar chars.',
     },
-    compactOneliner: {
-      label: 'Compact one-liner',
-      description: 'Single-line dense layout — merge everything visible.',
+    efficiency: {
+      label: 'Efficiency',
+      description: 'Speed-focused — throughput, prompt cache, token breakdown, duration.',
     },
   },
   diagnostics: {

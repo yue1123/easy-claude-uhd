@@ -333,23 +333,31 @@ export const zh: Messages = {
     },
     minimal: {
       label: '精简',
-      description: '仅模型标识 + 项目 + 上下文,其余全部关闭。',
+      description: '仅模型标识 + 项目 + 上下文,紧凑单行。',
     },
-    fullFeatured: {
-      label: '全功能',
-      description: '所有信息元素全部可见。',
+    developer: {
+      label: '开发者',
+      description: '专注 Git — 分支、脏状态、领先/落后、文件增删,更深路径。',
+    },
+    costUsage: {
+      label: '用量与成本',
+      description: '追踪开销 — 成本、上下文条、5 小时 + 7 天额度条及重置时间。',
+    },
+    powerUser: {
+      label: '全能',
+      description: '全部开启、多行展开 — token 拆解、缓存、速度、计数、内存。',
     },
     cjk: {
       label: 'CJK 优化',
       description: '中文用户专用 — language=zh,紧凑布局,窄字符进度条。',
     },
-    devMode: {
-      label: '开发模式',
-      description: '成本、耗时、速度、token 拆解、Claude Code 版本。',
+    aesthetic: {
+      label: '美化',
+      description: '主题化紧凑单行 — 合并分组、自定义配色与进度条字符。',
     },
-    compactOneliner: {
-      label: '紧凑单行',
-      description: '密集单行布局 — 合并所有可见元素。',
+    efficiency: {
+      label: '效率',
+      description: '聚焦速度 — 吞吐、prompt 缓存、token 拆解、耗时。',
     },
   },
   diagnostics: {
